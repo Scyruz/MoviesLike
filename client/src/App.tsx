@@ -1,7 +1,53 @@
-import React from "react";
+import {
+  Routes,
+  Route,
+  Navigate,
+  BrowserRouter as Router,
+} from "react-router-dom";
+import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+import MainPage from "./components/MainPage";
+import OtherPage from "./components/OtherPage";
 
 function App() {
-  return <div>Hello World</div>;
+  return (
+    <div>
+      <Router>
+        <Navbar
+          bg="light"
+          expand="lg"
+          style={{ position: "fixed", width: "100%" }}
+        >
+          <Container>
+            <Navbar.Brand href="/">MoviesLike</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="me-auto">
+                <Nav.Link href="/">Home</Nav.Link>
+                <Nav.Link href="/other">Other</Nav.Link>
+                <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.2">
+                    Another action
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.3">
+                    Something
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="#action/3.4">
+                    Separated link
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
+        <Routes>
+          <Route path="/" element={<MainPage></MainPage>} />
+          <Route path="/other" element={<OtherPage />} />
+        </Routes>
+      </Router>
+    </div>
+  );
 }
 
 export default App;
