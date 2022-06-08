@@ -1,4 +1,4 @@
-import { Container, Row, Col, Form, Button, Carousel } from "react-bootstrap";
+import { Container, Row, Col, Button, Alert } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import "../assets/css/main.css";
 import MovieList from "./MovieList";
@@ -7,6 +7,7 @@ import { MovieInterface } from "../types/MovieInterface";
 import axiosInstance from "../api/axiosInstance";
 
 export default function MainPage(): JSX.Element {
+  const [ShowError, setShowError] = useState(false);
   const [MovieData, setMovieData] = useState<MovieInterface>({
     title: "",
     id: "",
@@ -22,7 +23,12 @@ export default function MainPage(): JSX.Element {
         q: MovieData.title,
       },
     });
-    setSuggestionsList(data.data);
+    if (data.status === 400) {
+      // set warning
+      setShowError(true);
+    } else {
+      setSuggestionsList(data.data);
+    }
   };
 
   return (
@@ -52,6 +58,24 @@ export default function MainPage(): JSX.Element {
           </Col>
         </Row>
         <Row>
+          <Col xs={6} style={{ margin: "0 auto" }}>
+            <Alert
+              show={ShowError}
+              className="custom-error-alert"
+              variant="danger"
+              onClose={() => setShowError(false)}
+              dismissible
+            >
+              <Alert.Heading>
+                <span className="alert-span">Oh snap!</span> Looks like we dont
+                have that movie yet.
+              </Alert.Heading>
+              <p>
+                Our dataset doesn't always have the most recent movies. Try
+                something similar from earlier years.
+              </p>
+            </Alert>
+          </Col>
           <MovieList movies={SuggestionsList}></MovieList>
         </Row>
       </Container>
