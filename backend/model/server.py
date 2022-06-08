@@ -20,7 +20,9 @@ async def handler(websocket, path):
     await websocket.send(data)
 
 
-start_server = websockets.serve(handler, "localhost", 8000)
+start_server = websockets.serve(handler, "localhost", 8765, subprotocols=[
+                                "Sec-WebSocket-Protocol"])
+print("websocket running on localhost")
 
 
 asyncio.get_event_loop().run_until_complete(start_server)
