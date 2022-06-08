@@ -29,7 +29,7 @@ async def handler(websocket, path):
         await websocket.send(data)
 
 
-start_server = websockets.serve(handler, "localhost", 8765, subprotocols=[
+start_server = websockets.serve(handler, "127.0.0.1", 8765, subprotocols=[
                                 "Sec-WebSocket-Protocol"])
 print("websocket running on localhost")
 
