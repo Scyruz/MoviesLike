@@ -15,7 +15,7 @@ function App() {
         <Navbar
           bg="light"
           expand="lg"
-          style={{ position: "fixed", width: "100%" }}
+          style={{ position: "fixed", width: "100%", zIndex: "100" }}
         >
           <Container>
             <Navbar.Brand href="/">MoviesLike</Navbar.Brand>

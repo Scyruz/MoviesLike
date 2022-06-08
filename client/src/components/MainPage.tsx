@@ -1,5 +1,8 @@
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Carousel } from "react-bootstrap";
+import { useEffect } from "react";
 import "../assets/css/main.css";
+import MovieList from "./MovieList";
+import data from "../data.json";
 
 export default function MainPage(): JSX.Element {
   return (
@@ -31,6 +34,9 @@ export default function MainPage(): JSX.Element {
               </Form>
             </Container>
           </Col>
+        </Row>
+        <Row>
+          <MovieList movies={data}></MovieList>
         </Row>
       </Container>
     </div>
