@@ -18,16 +18,15 @@ export default function MainPage(): JSX.Element {
   const [SuggestionsList, setSuggestionsList] = useState<MovieInterface[]>([]);
 
   const handleSumbit = async () => {
-    const data = await axiosInstance.get("/like", {
-      params: {
-        q: MovieData.title,
-      },
-    });
-    if (data.status === 400) {
-      // set warning
-      setShowError(true);
-    } else {
+    try {
+      const data = await axiosInstance.get("/like", {
+        params: {
+          q: MovieData.title,
+        },
+      });
       setSuggestionsList(data.data);
+    } catch {
+      setShowError(true);
     }
   };
 
