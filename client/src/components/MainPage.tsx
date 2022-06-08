@@ -1,10 +1,30 @@
 import { Container, Row, Col, Form, Button, Carousel } from "react-bootstrap";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "../assets/css/main.css";
 import MovieList from "./MovieList";
-import data from "../data.json";
+import SearchMovie from "./SearchMovie";
+import { MovieInterface } from "../types/MovieInterface";
+import axiosInstance from "../api/axiosInstance";
 
 export default function MainPage(): JSX.Element {
+  const [MovieData, setMovieData] = useState<MovieInterface>({
+    title: "",
+    id: "",
+    description: "",
+    image: "",
+    resultType: "",
+  });
+  const [SuggestionsList, setSuggestionsList] = useState<MovieInterface[]>([]);
+
+  const handleSumbit = async () => {
+    const data = await axiosInstance.get("/like", {
+      params: {
+        q: MovieData.title,
+      },
+    });
+    setSuggestionsList(data.data);
+  };
+
   return (
     <div>
       <Container fluid className="main-container">
@@ -17,26 +37,22 @@ export default function MainPage(): JSX.Element {
               >
                 I want to watch movies like:
               </h2>
-              <Form>
-                <Form.Group className="mb-3" controlId="formMovieName">
-                  <Form.Control type="text" placeholder="Enter movie" />
-                  <Form.Text className="text-muted">
-                    The suggestions we make are based on this movie.
-                  </Form.Text>
-                </Form.Group>
-                <Button
-                  variant="danger"
-                  type="submit"
-                  style={{ width: "100%" }}
-                >
-                  Submit
-                </Button>
-              </Form>
+              <SearchMovie
+                MovieData={MovieData}
+                setMovieData={setMovieData}
+              ></SearchMovie>
+              <Button
+                variant="danger"
+                onClick={handleSumbit}
+                style={{ width: "100%", marginTop: "1.5rem" }}
+              >
+                Submit
+              </Button>
             </Container>
           </Col>
         </Row>
         <Row>
-          <MovieList movies={data}></MovieList>
+          <MovieList movies={SuggestionsList}></MovieList>
         </Row>
       </Container>
     </div>
