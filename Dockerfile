@@ -11,4 +11,4 @@ RUN npm install
 RUN npm run build
 
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "start", "--bind", "0.0.0.0:$PORT", "wsgi"]
