@@ -1,3 +1,11 @@
 .custom-movie-card {
   box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 16px 0px;
+  margin: 4rem auto 4rem auto;
+}
+
+.grow {
+  transition: all 0.2s ease-in-out;
+}
+.grow:hover {
+  transform: scale(1.1);
 }

@@ -1,8 +1,7 @@
 .main-container {
   padding-top: 8rem;
-  height: 100vh;
-  background-image: url("../img/background.png");
-  background-repeat: no-repeat;
+  min-height: 100vh;
+  background-image: url("../img/background-large.png");
   background-size: cover;
 }
 .form-container {

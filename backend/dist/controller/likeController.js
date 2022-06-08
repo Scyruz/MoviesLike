@@ -11,7 +11,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.likeController = void 0;
 const likeController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const movieName = req.query.q;
+    const { movieId, movieName } = req.query;
     // make request to python websocket using movieName
+    console.log(movieId, movieName);
+    return res.status(200);
 });
 exports.likeController = likeController;
