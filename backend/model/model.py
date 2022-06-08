@@ -110,9 +110,12 @@ def get_recommendations(df: pd.DataFrame, title: str, cosine_sim) -> pd.Series:
     indices = pd.Series(df.index, index=df['title']).drop_duplicates()
 
     # Get the index of the movie that matches the title
-    idx = indices[title]
+    if title in indices:
+        idx = indices[title]
+    else:
+        return []
 
-    # Get the pairwsie similarity scores of all movies with that movie
+        # Get the pairwsie similarity scores of all movies with that movie
     sim_scores = list(enumerate(cosine_sim[idx]))
 
     # Sort the movies based on the similarity scores

@@ -12,12 +12,21 @@ async def handler(websocket, path):
 
     data = await websocket.recv()
 
-    recommendation_list = get_recommendations(df, data, cosine_sim).values
-    rec_dict = {"recommendation_titles": [
-        {"title": title} for title in recommendation_list]}
-    data = json.dumps(rec_dict)
+    recommendation_list_series = get_recommendations(df, data, cosine_sim)
+    if len(recommendation_list_series):
+        recommendation_list = recommendation_list_series.values
+        rec_dict = {"recommendation_titles": [
+            {"title": title} for title in recommendation_list]}
+        data = json.dumps(rec_dict)
 
-    await websocket.send(data)
+        print(data)
+        await websocket.send(data)
+    else:
+        print(recommendation_list_series)
+        data = json.dumps(
+            {"recommendation_titles": []})
+        print(data)
+        await websocket.send(data)
 
 
 start_server = websockets.serve(handler, "localhost", 8765, subprotocols=[

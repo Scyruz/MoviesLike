@@ -15,19 +15,22 @@ export const likeController: Function = async (req: Request, res: Response) => {
   client.on('connect', function (connection: any) {
     connection.on('error', function (error: Error) {
       console.log("Connection Error: " + error.message);
+      res.status(400)
     });
     connection.on('close', function () {
       console.log('WebSocket Connection Closed');
     });
     connection.on('message', async (message: any) => {
       if (message.type === 'utf8') {
-        const data = JSON.parse(message.utf8Data)
-        console.log("Received: '" + data + "'");
+        const data = JSON.parse(message.utf8Data).recommendation_titles
+        console.log("Received: " + data);
 
-        const movieList = await getMovieList(data.recommendation_titles)
-        return res.json(movieList)
-
-        // return res.json(JSON.parse(data))
+        if (data.length) {
+          const movieList = await getMovieList(data);
+          return res.json(movieList);
+        } else {
+          return res.status(400).send();
+        }
       }
     });
 
